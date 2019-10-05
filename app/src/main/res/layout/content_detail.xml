@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_coners"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin_medium_3"
+            android:paddingTop="@dimen/margin_medium_3"
+            android:paddingEnd="@dimen/margin_medium_3">
+
+            <TextView
+                android:id="@+id/plantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPlantName"
+                android:textSize="@dimen/text_heading_2x"
+                android:textStyle="bold"
+                tools:text="Monstera" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/uploaderPhoto"
+                    android:layout_width="@dimen/square_50_image"
+                    android:layout_height="@dimen/square_50_image"
+                    android:src="@drawable/leaf" />
+
+                <TextView
+                    android:id="@+id/plantUploaderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:textColor="@color/colorPlantName"
+                    tools:text="by aaa" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/plantDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:lineSpacingExtra="5dp"
+                tools:text="Nicknamed the Swiss cheese plant and commonly known as Monstera Deliciosa, our 'Chaz' is very on trend. But, that's not all. This plant is one of the easiest around to care for and, thanks to its unique foliage, one of our favourites too. He's supported by a moss pole to help keep him proudly upright." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium_3"
+                android:text="@string/tips"
+                android:textColor="@color/colorPlantName"
+                android:textSize="@dimen/text_regular_3x"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tipsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium_3"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/margin_medium_3"
+            android:paddingEnd="@dimen/margin_medium"
+            tools:listitem="@layout/item_tips_card" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

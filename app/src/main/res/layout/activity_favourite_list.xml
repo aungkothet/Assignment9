@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/margin_medium_3"
+    android:paddingEnd="@dimen/margin_medium_3"
+    android:paddingTop="@dimen/margin_medium_3"
+    android:orientation="vertical"
+    tools:context=".activities.FavouriteListActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favourite"
+        android:textStyle="bold"
+        android:textColor="@color/colorPlantName"
+        android:textSize="@dimen/text_heading_1x"/>
+
+<!--    <com.google.android.material.chip.ChipGroup-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/margin_medium"-->
+<!--        app:chipSpacing="@dimen/margin_medium"-->
+<!--        app:singleLine="true">-->
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checkable="true"-->
+<!--            android:checked="true"-->
+<!--            android:text="Recent" />-->
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checkable="true"-->
+<!--            android:text="Old" />-->
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checkable="true"-->
+<!--            android:text="Color" />-->
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checkable="true"-->
+<!--            android:text="Album" />-->
+<!--    </com.google.android.material.chip.ChipGroup>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/favPlantRecyclerList"
+        />
+</LinearLayout>

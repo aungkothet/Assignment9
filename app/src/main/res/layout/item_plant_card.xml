@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_medium_2"
+    android:layout_marginBottom="@dimen/margin_medium"
+    android:backgroundTint="@android:color/transparent"
+    android:elevation="0dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plant_card_custom_corner"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/margin_medium_2">
+
+        <ToggleButton
+            android:id="@+id/fav_toggle"
+            android:layout_width="@dimen/square_50_image"
+            android:layout_height="@dimen/square_50_image"
+            android:background="@drawable/btn_fav_toogle"
+            android:textOff=""
+            android:textOn="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/margin_medium_3"
+                android:paddingEnd="0dp">
+
+                <TextView
+                    android:id="@+id/plantItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPlantName"
+                    android:textSize="@dimen/text_regular_3x"
+                    tools:text="AVCEDADA" />
+
+                <ImageView
+                    android:id="@+id/uploaderPhoto"
+                    android:layout_width="@dimen/square_50_image"
+                    android:layout_height="@dimen/square_50_image"
+                    android:layout_below="@id/plantItemName" />
+
+                <TextView
+                    android:id="@+id/plantUploaderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/plantItemName"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/uploaderPhoto"
+                    android:textColor="@color/colorPlantName"
+                    tools:text="bt aaa" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/plantItemImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/leaf" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
