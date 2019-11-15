@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import com.google.android.material.navigation.NavigationView
@@ -55,11 +56,10 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        mPresenter = StartPresenter()
+        mPresenter = ViewModelProviders.of(this).get(StartPresenter::class.java)
         mPresenter.initPresenter(this)
         plantAdapter = PlantRecyclerAdapter(mPresenter)
-        mPresenter.onCreate()
-        mPresenter.onUiReady()
+        mPresenter.onUiReady(this)
 
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(
@@ -105,30 +105,5 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         view.profileImage.load(userVo.userPhotoUrl)
         view.userName.text = userVo.userName
         view.memberRankTextView.text = userVo.memberRank
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mPresenter.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mPresenter.onStop()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mPresenter.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mPresenter.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mPresenter.onDestroy()
     }
 }

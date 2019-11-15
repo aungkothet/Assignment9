@@ -67,7 +67,8 @@
             <ImageView
                 android:id="@+id/plantItemImage"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:src="@drawable/leaf" />
         </LinearLayout>

@@ -1,5 +1,6 @@
 package io.github.aungkothet.padc.assignment9.persistance.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.github.aungkothet.padc.assignment9.data.vos.FavPlantsVo
 import io.github.aungkothet.padc.assignment9.data.vos.PlantVo
@@ -11,7 +12,7 @@ abstract class FavPlantDao {
     abstract fun insetFavPlant(favPlantsVo: FavPlantsVo)
 
     @Query("SELECT plant.* FROM plant INNER JOIN fav_plants WHERE fav_plant_id == plant_id")
-    abstract fun getFavPlantList(): List<PlantVo>
+    abstract fun getFavPlantList(): LiveData<List<PlantVo>>
 
     @Query("SELECT * FROM fav_plants WHERE fav_plant_id=:plantId")
     abstract fun getFavPlantByPlantId(plantId:String): FavPlantsVo

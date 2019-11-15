@@ -3,7 +3,9 @@ package io.github.aungkothet.padc.assignment9.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import io.github.aungkothet.padc.assignment9.R
@@ -12,6 +14,7 @@ import io.github.aungkothet.padc.assignment9.adapters.TipsRecyclerAdapter
 import io.github.aungkothet.padc.assignment9.data.vos.PlantVo
 import io.github.aungkothet.padc.assignment9.data.vos.TipsVo
 import io.github.aungkothet.padc.assignment9.mvp.persenters.DetailPresenter
+import io.github.aungkothet.padc.assignment9.mvp.persenters.MainPresenter
 import io.github.aungkothet.padc.assignment9.mvp.views.DetailView
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
@@ -30,14 +33,15 @@ class DetailActivity : BaseActivity(), DetailView {
     private lateinit var tipsRecyclerAdapter: TipsRecyclerAdapter
     private lateinit var mPresenter: DetailPresenter
 
+    private var favStatus = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
-        mPresenter = DetailPresenter()
+        mPresenter = ViewModelProviders.of(this).get(DetailPresenter::class.java)
         mPresenter.initPresenter(this)
         tipsRecyclerAdapter = TipsRecyclerAdapter()
-        mPresenter.onUiReady(intent.getStringExtra(IE_PLANT_ID)!!)
+        mPresenter.onUiReady(intent.getStringExtra(IE_PLANT_ID)!!,this)
         with(tipsRecyclerView) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -59,37 +63,20 @@ class DetailActivity : BaseActivity(), DetailView {
         )
         tipsRecyclerAdapter.appendNewData(tips)
         fab.setOnClickListener {
-            mPresenter.favButtonClicked(plantVo.plantId)
+            if(!favStatus)
+            {
+                favStatus = true
+                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite))
+            }
+            else{
+                favStatus = false
+                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_border))
+            }
+            mPresenter.favButtonClicked(plantVo.plantId,favStatus)
         }
     }
 
-    override fun favButtonClicked(plantId: String) {
-        Toast.makeText(this, "favButtonClicked clicked", Toast.LENGTH_SHORT).show()
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mPresenter.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mPresenter.onStop()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mPresenter.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mPresenter.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mPresenter.onDestroy()
+    override fun favButtonClicked(message: String) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
 }

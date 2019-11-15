@@ -1,5 +1,7 @@
 package io.github.aungkothet.padc.assignment9.mvp.persenters
 
+import androidx.lifecycle.Observer
+import io.github.aungkothet.padc.assignment9.activities.BaseActivity
 import io.github.aungkothet.padc.assignment9.data.models.LoginModelImpl
 import io.github.aungkothet.padc.assignment9.data.models.PlantModelImpl
 import io.github.aungkothet.padc.assignment9.data.vos.FavPlantsVo
@@ -23,23 +25,20 @@ class StartPresenter : BasePersenter<StartView>(), PlantDelegate {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-
-        PlantModelImpl.getPlants({
-            mView.showPlantList(it)
-        },{
-            mView.showErrorMessage(it)
-        })
-    }
-
     fun navFavClicked(){
         mView.navigateToFavList()
     }
 
-    fun onUiReady()
+    fun onUiReady(activity: BaseActivity)
     {
-        mView.bindUserDataToNav(LoginModelImpl.checkLoggedIn()!!)
+        PlantModelImpl.getPlants{
+            mView.showErrorMessage(it)
+        }.observe(activity, Observer {
+            mView.showPlantList(it)
+        })
+        LoginModelImpl.checkLoggedIn().observe(activity, Observer {
+            mView.bindUserDataToNav(it[0])
+        })
     }
 
     fun navLogoutClicked(userVo: UserVo)

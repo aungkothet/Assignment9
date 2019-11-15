@@ -1,5 +1,6 @@
 package io.github.aungkothet.padc.assignment9.data.models
 
+import androidx.lifecycle.LiveData
 import io.github.aungkothet.padc.assignment9.data.vos.UserVo
 
 interface LoginModel {
@@ -12,5 +13,5 @@ interface LoginModel {
 
     fun logout(userVo: UserVo)
 
-    fun checkLoggedIn():UserVo?
+    fun checkLoggedIn():LiveData<List<UserVo>>
 }

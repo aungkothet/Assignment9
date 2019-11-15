@@ -1,5 +1,7 @@
 package io.github.aungkothet.padc.assignment9.data.models
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import io.github.aungkothet.padc.assignment9.data.vos.FavPlantsVo
 import io.github.aungkothet.padc.assignment9.data.vos.PlantVo
 
@@ -16,28 +18,19 @@ object PlantModelImpl : BaseModel(), PlantModel {
         dataBase.favPlantDao().insetFavPlant(favPlantsVo)
     }
 
-    override fun getFavPlants(onSuccess: (List<PlantVo>) -> Unit, onFailure: (String) -> Unit) {
-        val plantsFromDB = dataBase.favPlantDao().getFavPlantList()
-        if (plantsFromDB.isNotEmpty()) {
-            onSuccess(plantsFromDB)
-        } else {
-            onFailure("No Favourite Plant Added!!")
-        }
+    override fun getFavPlants(onFailure: (String) -> Unit): LiveData<List<PlantVo>> {
+        return dataBase.favPlantDao().getFavPlantList()
+
     }
 
-    override fun getPlants(onSuccess: (List<PlantVo>) -> Unit, onFailure: (String) -> Unit) {
-        val plantsFromDB = dataBase.plantDao().getAllPlants()
-        if (plantsFromDB.isNotEmpty()) {
-            onSuccess(plantsFromDB)
-        } else {
-            dataAgent.getPlantList({
-                dataBase.plantDao().insetPlants(it)
-                onSuccess(it)
-            }, onFailure)
-        }
+    override fun getPlants(onFailure: (String) -> Unit): LiveData<List<PlantVo>> {
+        dataAgent.getPlantList({
+            dataBase.plantDao().insetPlants(it)
+        }, onFailure)
+        return Transformations.distinctUntilChanged(dataBase.plantDao().getAllPlants())
     }
 
-    override fun getPlantById(plantId: String): PlantVo {
+    override fun getPlantById(plantId: String): LiveData<PlantVo> {
         return dataBase.plantDao().getPlantById(plantId)
     }
 
