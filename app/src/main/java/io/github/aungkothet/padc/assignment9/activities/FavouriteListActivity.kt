@@ -1,6 +1,11 @@
 package io.github.aungkothet.padc.assignment9.activities
 
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.Slide
+import android.view.Gravity
+import android.view.Window
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import io.github.aungkothet.padc.assignment9.R
@@ -26,6 +31,7 @@ class FavouriteListActivity : BaseActivity(), FavPlantListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpTransition()
         setContentView(R.layout.activity_favourite_list)
         mPresenter = ViewModelProviders.of(this).get(FavPlantListPresenter::class.java)
         mPresenter.initPresenter(this)
@@ -40,4 +46,15 @@ class FavouriteListActivity : BaseActivity(), FavPlantListView {
     }
 
 
+    private fun setUpTransition() {
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+            val slideTransition = Slide()
+            slideTransition.slideEdge = Gravity.BOTTOM
+            slideTransition.interpolator = AccelerateDecelerateInterpolator()
+            slideTransition.duration = 600
+            enterTransition = slideTransition
+            exitTransition = slideTransition
+        }
+    }
 }

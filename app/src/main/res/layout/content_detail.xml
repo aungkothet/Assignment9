@@ -20,14 +20,28 @@
             android:paddingTop="@dimen/margin_medium_3"
             android:paddingEnd="@dimen/margin_medium_3">
 
-            <TextView
-                android:id="@+id/plantName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPlantName"
-                android:textSize="@dimen/text_heading_2x"
-                android:textStyle="bold"
-                tools:text="Monstera" />
+                android:gravity="end"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/plantName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPlantName"
+                    android:textSize="@dimen/text_heading_2x"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    tools:text="Monstera" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/fab"
+                    android:layout_width="@dimen/margin_xxlarge"
+                    android:layout_height="@dimen/margin_xxlarge"
+                    app:lottie_fileName="favourite_animation.json" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

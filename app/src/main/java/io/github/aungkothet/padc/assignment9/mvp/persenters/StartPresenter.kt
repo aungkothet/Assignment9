@@ -1,5 +1,7 @@
 package io.github.aungkothet.padc.assignment9.mvp.persenters
 
+import android.media.Image
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import io.github.aungkothet.padc.assignment9.activities.BaseActivity
 import io.github.aungkothet.padc.assignment9.data.models.LoginModelImpl
@@ -10,8 +12,8 @@ import io.github.aungkothet.padc.assignment9.delegates.PlantDelegate
 import io.github.aungkothet.padc.assignment9.mvp.views.StartView
 
 class StartPresenter : BasePersenter<StartView>(), PlantDelegate {
-    override fun onTabItemEvent(plantId: String) {
-        mView.navigateToDetail(plantId)
+    override fun onTabItemEvent(plantId: String,plantImage:ImageView) {
+        mView.navigateToDetail(plantId,plantImage)
     }
 
     override fun favButtonClicked(plantId: String,toggleStatus:Boolean) {

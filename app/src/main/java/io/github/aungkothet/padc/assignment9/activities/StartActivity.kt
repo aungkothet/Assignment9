@@ -1,11 +1,19 @@
 package io.github.aungkothet.padc.assignment9.activities
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.transition.Fade
+import android.util.DisplayMetrics
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.view.Window
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +45,16 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         }
     }
 
+    private fun setUpTransition() {
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+            val fadeTransaction = Fade()
+            fadeTransaction.interpolator = AccelerateDecelerateInterpolator()
+            fadeTransaction.duration = 600
+            enterTransition = fadeTransaction
+        }
+    }
+
     private lateinit var plantAdapter: PlantRecyclerAdapter
     private lateinit var mPresenter: StartPresenter
 
@@ -55,6 +73,7 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     lateinit var userVo: UserVo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpTransition()
         setContentView(R.layout.activity_start)
         mPresenter = ViewModelProviders.of(this).get(StartPresenter::class.java)
         mPresenter.initPresenter(this)
@@ -75,6 +94,21 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         toggle.isDrawerIndicatorEnabled = true
 
 
+        val displayMatrix = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMatrix)
+        val width = displayMatrix.widthPixels
+
+        ObjectAnimator.ofFloat(
+            plantList,
+            View.TRANSLATION_X,
+            width.toFloat(),
+            0f
+        ).apply {
+            duration = 1000L
+            start()
+        }
+
+
         with(plantList) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -87,8 +121,12 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         plantAdapter.setNewData(plantList.toMutableList())
     }
 
-    override fun navigateToDetail(plantId: String) {
-        startActivity(DetailActivity.newIntent(this, plantId))
+    override fun navigateToDetail(plantId: String, plantImage: ImageView) {
+        val pair = Pair.create(plantImage as View, "tPlantImage")
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair)
+
+        startActivity(DetailActivity.newIntent(this, plantId), options.toBundle())
     }
 
     override fun showErrorMessage(message: String) {
@@ -96,7 +134,10 @@ class StartActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
     override fun navigateToFavList() {
-        startActivity(Intent(this, FavouriteListActivity::class.java))
+        startActivity(
+            Intent(this, FavouriteListActivity::class.java),
+            ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
+        )
     }
 
     override fun bindUserDataToNav(userVo: UserVo) {

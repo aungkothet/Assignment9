@@ -1,9 +1,13 @@
 package io.github.aungkothet.padc.assignment9.activities
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
+import android.util.DisplayMetrics
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +22,7 @@ import io.github.aungkothet.padc.assignment9.mvp.persenters.MainPresenter
 import io.github.aungkothet.padc.assignment9.mvp.views.DetailView
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
+import kotlinx.android.synthetic.main.content_flower_list.*
 
 class DetailActivity : BaseActivity(), DetailView {
 
@@ -42,6 +47,42 @@ class DetailActivity : BaseActivity(), DetailView {
         mPresenter.initPresenter(this)
         tipsRecyclerAdapter = TipsRecyclerAdapter()
         mPresenter.onUiReady(intent.getStringExtra(IE_PLANT_ID)!!,this)
+
+
+        val displayMatrix = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMatrix)
+        val width = displayMatrix.widthPixels
+
+        ObjectAnimator.ofFloat(
+            tipsRecyclerView,
+            View.TRANSLATION_X,
+            width.toFloat(),
+            0f
+        ) .apply {
+            duration = 500L
+            start()
+        }
+
+        val xScaleAnimator = ObjectAnimator.ofFloat(
+            fab,
+            View.SCALE_X,
+            0.25f,
+            1f
+        )
+
+        val yScaleAnimator = ObjectAnimator.ofFloat(
+            fab,
+            View.SCALE_Y,
+            0.25f,
+            1f
+        )
+
+        AnimatorSet().apply {
+            duration = 500
+            play(xScaleAnimator).with(yScaleAnimator)
+            start()
+        }
+
         with(tipsRecyclerView) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -66,11 +107,15 @@ class DetailActivity : BaseActivity(), DetailView {
             if(!favStatus)
             {
                 favStatus = true
-                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite))
+//                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite))
+                fab.speed = 1.0f
+                fab.playAnimation()
             }
             else{
                 favStatus = false
-                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_border))
+//                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_border))
+                fab.speed = -4.0f
+                fab.playAnimation()
             }
             mPresenter.favButtonClicked(plantVo.plantId,favStatus)
         }

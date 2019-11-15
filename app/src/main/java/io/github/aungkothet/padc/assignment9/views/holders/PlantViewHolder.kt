@@ -12,7 +12,7 @@ class PlantViewHolder(itemView: View, private val delegate: PlantDelegate) :
     init {
         itemView.setOnClickListener {
             data?.plantId?.let {
-                delegate.onTabItemEvent(it)
+                delegate.onTabItemEvent(it,itemView.plantItemImage)
             }
         }
     }
